@@ -1,5 +1,5 @@
 # import builtin functions and classes from flask module
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 
 # iniliaze flask app
 app = Flask(__name__)
@@ -57,8 +57,73 @@ def form():
 # we can allow multiple methods as paramerter
 @app.route('/submit', methods=['POST','GET'])
 def submit():
-    return 'Form is submitted'
+    # get form method (get,post)
+    # return request.method
+    
+    # GET FORM
+    # get all arguments
+    # return request.args
 
+    # get any argument
+    # return request.args.get('fname')
+
+
+    # POST form
+    #get post form values
+    # return request.form 
+
+    # get any post form value
+    # return request.form['fname']
+
+
+    if request.method == 'POST':
+        # return 'if POST'
+        # return   request.form
+        data = request.form
+        return render_template('form-data.html',form_data = data)
+    else:
+        # return 'else GET'
+        # return request.args
+        data1 = request.args
+        return render_template('form-data.html',form_data = data1)
+
+    # return 'Form is submitted'
+
+
+@app.route('/jinja')
+def jinja():
+
+    data = [
+            {
+                'name':'ali',
+                'age': 20,
+                'education': 'inter',
+                'phone' : '030120217'
+            },
+            {
+                'name':'ahmad',
+                'age': 22,
+                'education': 'matric',
+                'phone' : '030120214657'
+            },
+            {
+                'name':'adeel',
+                'age': 19,
+                'education': 'inter',
+                'phone' : '03012240217'
+            },
+            {
+                'name':'umer',
+                'age': 25,
+                'education': 'Phd',
+                'phone' : '03012021700014'
+            },
+        ]
+    
+    # return data
+    len(data) 
+    # return f' {len(data)} ' 
+    return render_template('jinja.html',data=data)
 
 # app.run(host,port,debug,options)
 

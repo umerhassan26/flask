@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display dictionay</title>
+    <link rel="stylesheet" href=" {{ url_for('static',filename='style.css') }} ">
+    <!-- <link rel="stylesheet" href=" {{ url_for('static',filename='css/style.css') }} "> -->
+</head>
+<body>
+    <!-- get length of list -->
+    {% set count = data | length %}
+    
+    <!-- {{ count }} -->
+    <!-- {{ data }} -->
+  
+    {% if count > 0 %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Education</th>
+                <th>Phone #</th>
+            </tr>
+
+            {% for d in data  %}
+                <tr>
+                    <td> {{ d.name }} </td>
+                    <td> {{ d.age }} </td>
+                    <td> {{ d.education }} </td>
+                    <td> {{ d.phone }} </td>
+                </tr>
+                <!-- {{ d }} <br> -->
+                <!-- <h3> Name: {{ d.name }}</h3>
+                <h3> Age: {{ d.age }}</h3>
+                <h3> Education: {{ d.education }}</h3>
+                <h3> Phone #: {{ d.phone }}</h3>
+                <hr> -->
+            {% endfor %}
+        </table>
+    {% else %}
+        <h1>NO data</h1>
+    {% endif %}
+</body>
+</html>
