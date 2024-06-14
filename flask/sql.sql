@@ -45,3 +45,13 @@ SELECT * FROM Products WHERE ProductID BETWEEN 10 AND 25 ;
 SELECT * FROM Customers WHERE CustomerName LIKE 'a%';
 
 SELECT * FROM Customers WHERE Country LIKE 'G__m__y';
+
+INSERT INTO `users` VALUES (NULL,'Abdullah','','030126462');
+
+INSERT INTO `users`(`name`,`phone`)  VALUES ('Abdullah','030126462');
+
+UPDATE `users` SET `phone` = '31741525' WHERE `id` = 15;
+
+UPDATE `users` SET `phone` = '31741525', `name` = 'Umer', `status` = 'Active'  WHERE `id` = 20;
+
+DELETE FROM `users` WHERE `id` = 10 

@@ -3,9 +3,9 @@ from mysql.connector import connect
 
 connection = connect(
     host= 'localhost',
-    user= 'root',
+    user= 'root',   
     password = '',
-    database = 'test_db'
+    database = 'flask_db'
     )
 
 
