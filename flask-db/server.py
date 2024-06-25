@@ -60,6 +60,7 @@ def edit(id):
         db= connection.cursor()
         db.execute( f'SELECT * FROM users WHERE id ={id}' )
         user = db.fetchone()
+        db.close()
         return render_template('edit-form.html', user=user)
     
     else:
