@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
-
 from .forms.user_create_form import UserCreateForm
+
+from .models import Category, Brand, Product
+
+
 
 
 
@@ -58,10 +61,21 @@ def register(request):
 
 
 def shop(request):
-    return render(request,'shop.html')
+    categories = Category.objects.all()
+    brands = Brand.objects.all()
+    products = Product.objects.all()
+
+    # return HttpResponse(brands)
+
+
+
+    return render(request,'shop.html', {'categories':categories, 'brands' : brands , 'products' : products})
 
 def product_details(request,id):
-    return render(request,'product_details.html')
+    product = Product.objects.get(id=id)
+    # return HttpResponse(product)
+
+    return render(request,'product_details.html' , {'product':product})
 
 def checkout(request):
     return render(request,'checkout.html')
