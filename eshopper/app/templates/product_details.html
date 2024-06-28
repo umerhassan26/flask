@@ -56,13 +56,26 @@
                             <p>Web ID: {{ product.id }}</p>
                             <img src="{% static 'images/product-details/rating.png' %} " alt="" />
                             <span>
-                                <span>US $ {{ product.price }}</span>
-                                <label>Quantity:</label>
-                                <input type="text" value="3" />
-                                <button type="button" class="btn btn-fefault cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
-                                </button>
+                                <form action=" {% url 'add_to_cart' %} " method="POST">
+                                    
+                                    {% csrf_token %}
+                                    
+                                    <span>US $ {{ product.price }}</span>
+                                    <input type="hidden" value="{{ product.id }}" name="product_id">
+                                    <!-- <label>Quantity:</label>
+                                    <input type="text" value="3" /> -->
+                                    <div class="cart_quantity_button" style ="display: inline;" >
+                                        <a class="cart_quantity_up" id ='cart_quantity_up' href="#"> + </a>
+                                        <input class="cart_quantity_input" id = "cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down" id="cart_quantity_down" href="#"> - </a>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-fefault cart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Add to cart
+                                    </button>
+                                </form>
                             </span>
                             <p><b>Availability:</b> 
                                 {% if product.availability %}  
@@ -370,4 +383,43 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+
+{% block 'script' %}
+<script>
+    // increment
+    var plus_btn = document.getElementById('cart_quantity_up')
+
+    plus_btn.addEventListener('click',function(){
+        let qty_input = document.getElementById('cart_quantity_input')
+        let qty = qty_input.value
+        // qty =  qty + 1;
+        qty++;
+
+        qty_input.value = qty
+    });
+
+
+    // decrement
+    var min_btn = document.getElementById('cart_quantity_down')
+
+    min_btn.addEventListener('click',function(){
+        let qty_input = document.getElementById('cart_quantity_input')
+        let qty = qty_input.value
+        if(qty>=2){
+            qty--;
+            qty_input.value = qty
+        }
+
+        // console.log(qty_input);
+        // console.log(qty);
+        // alert(qty_input);
+        // qty =  qty + 1;
+        
+    });
+
+
+</script>
+
 {% endblock %}

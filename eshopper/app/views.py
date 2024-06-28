@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from .forms.user_create_form import UserCreateForm
 
-from .models import Category, Brand, Product
+from .models import Category, Brand, Product, Cart
 
 
 
@@ -67,8 +67,6 @@ def shop(request):
 
     # return HttpResponse(brands)
 
-
-
     return render(request,'shop.html', {'categories':categories, 'brands' : brands , 'products' : products})
 
 def product_details(request,id):
@@ -81,7 +79,46 @@ def checkout(request):
     return render(request,'checkout.html')
 
 def cart(request):
-    return render(request,'cart.html')
+    user_id = request.user.id
+
+    cart_items = Cart.objects.filter(user = user_id)
+    # return HttpResponse(cart)
+    return render(request,'cart.html', { 'cart_items': cart_items } )
+
+def add_to_cart(request):
+    product_id = request.POST['product_id']
+    qty = request.POST['quantity']
+    
+    product = Product.objects.get(pk=product_id)
+    user_id = request.user.id
+    
+            # return HttpResponse(sub_total)
+
+    try:
+        cart_item = Cart.objects.get(product = product, user = user_id)
+        
+        if cart_item is None:
+            sub_total = product.price * int(qty)
+            cart = Cart(product=product, qty=qty, sub_total = sub_total, user = user_id)
+            cart.save()
+        else:
+            cart_item.qty = cart_item.qty + int(qty)
+            cart_item.sub_total =  cart_item.qty * product.price
+            cart_item.save()
+
+
+    except:
+        return redirect('shop')
+
+
+    # return HttpResponse(check_cart)
+    
+    
+
+    return redirect('cart')
+    # return HttpResponse(request)
+
+
 
 def blogs(request):
     return render(request,'blogs.html')

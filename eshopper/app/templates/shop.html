@@ -33,6 +33,9 @@
                             <ul class="nav nav-pills nav-stacked">
 
                                 {% for brand in brands %}
+                                    {% for product in brand.products %}
+                                        product {{ product }}
+                                    {% endfor %}
                                     <li><a href=""> <span class="pull-right">(50)</span>{{ brand.name }}</a></li>
                                 {% endfor %}
                                 
