@@ -1,0 +1,33 @@
+1- create environment
+    py -m venv <env name> 
+    py -m venv venv
+
+2- activate environment
+    <env name>/scripts/activate
+    venv/scripts/activate
+
+3- mention / install python packages
+    a- pip install <package name>
+    a- pip install django
+    
+    b- pip install -r <filename>
+    b- pip install -r req.txt
+
+4- create project
+    # create project with child folder
+    django-admin startproject <project name> 
+    django-admin startproject django_1
+
+    # create project in same directory 
+    django-admin startproject <project name> . 
+    django-admin startproject django_1 .
+
+5- create app 
+    a- django-admin startapp <app name>
+       django-admin startapp app
+
+    b- py manage.py startapp app
+
+6 - run server
+    a- py manage.py runserver
+    b- py manage.py runserver 8080

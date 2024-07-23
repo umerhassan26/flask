@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block 'title' %} Home - Django Project {% endblock %}
+
+{% block 'content' %}
+
+        <h1> Home Page </h1>
+        <h1> welcome !!! </h1>
+
+        <ul>
+            {% for key in data %}
+
+                <li> {{ data.key }} </li>    
+            
+            {% endfor %}
+        </ul>    
+            
+        <h1> {{ data }} </h1>
+
+{% endblock %}

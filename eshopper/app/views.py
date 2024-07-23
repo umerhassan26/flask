@@ -15,6 +15,10 @@ def home(request):
     # return HttpResponse(request.user.is_authenticated)
     return render(request,'home.html')
 
+def map(request):
+    # return HttpResponse(request.user.is_authenticated)
+    return render(request,'map.html')
+
 def user_login(request):
     if request.method == "GET":
         # form = UserCreationForm()
@@ -33,9 +37,6 @@ def user_login(request):
         else:
             login(request,user)
             return HttpResponse('successfully logged in!!')
-
-
-
 
         return HttpResponse(request)
 

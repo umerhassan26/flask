@@ -1,5 +1,5 @@
 """
-URL configuration for eshopper project.
+URL configuration for django_1 project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -14,17 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
 from django.contrib import admin
 from django.urls import path, include
 
-from .settings import MEDIA_URL, MEDIA_ROOT
-from django.conf.urls.static import static
-
-
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('',include('app.urls'))
-    
-] + static(MEDIA_URL , document_root = MEDIA_ROOT )
+    path('admin/', admin.site.urls),
+    path('', include('app.urls')),
+    path('web/',include('web.urls')),
+]
