@@ -10,5 +10,6 @@ urlpatterns = [
     # path('product-details/',views.product_details ),
     # path('product/details/',views.product_details ),
     # path('product/details/<id>/',views.product_details ),
-    path('product/details/<int:id>/',views.product_details ),
+    path('product/details/<int:id>/',views.product_details , name= 'product_details' ),
+    path('register/', views.signup_customer , name='signup_customer')
 ]

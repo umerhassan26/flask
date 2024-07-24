@@ -31,3 +31,12 @@
 6 - run server
     a- py manage.py runserver
     b- py manage.py runserver 8080
+
+
+Dealing with models
+
+1- create model class in models.py in app
+2- makemigrations for new changes
+    py manage.py makemigrations
+    py manage.py makemigrations <app name>
+    py manage.py makemigrations app
