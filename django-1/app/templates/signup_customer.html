@@ -6,6 +6,8 @@
 
 {% block 'content' %}
     <h1>Register New Customer.</h1>
+    <a href=" {% url 'customers' %} ">Customers</a>
+
     <form method="POST" action=" {% url 'signup_customer' %} ">
 
         {% csrf_token %}

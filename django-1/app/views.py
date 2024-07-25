@@ -65,3 +65,48 @@ def signup_customer(request):
             return HttpResponse('provide valid info!!!')
         
         return HttpResponse(first_name )
+
+def customers(request):
+    customers = Customer.objects.all()
+    return render(request,'customers.html',{'customers' : customers} )
+
+
+
+    # return HttpResponse(customers)
+
+    # customers = Customer.objects.get( )
+    # customers = Customer.objects.filter( )
+
+def update_customer(request,id):
+
+    customer = Customer.objects.get( id = id )
+    if request.method == 'GET':    
+        # return HttpResponse( customer.first_name )
+
+
+        return render(request,'update_customer.html', { 'customer' : customer } )
+    else:
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        if first_name and email and phone:
+            
+            customer.first_name = first_name
+            customer.last_name = last_name
+            customer.email = email
+            customer.phone = phone
+            customer.save()
+            return HttpResponse('user record updated successfully!!.')
+
+        else:
+            return HttpResponse('provide valid info!!!')
+
+        return HttpResponse( request.POST )
+    
+
+def delete_customer(request, id):
+    customer = Customer.objects.get( id = id)
+    customer.delete()
+
+    return HttpResponse( f'{id} is deleted ' )

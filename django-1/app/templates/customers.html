@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block 'title' %} Customers  - Django Project {% endblock %}
+
+{% block 'style' %}
+    <style>
+        table, tr , th, td {
+            border : 1px solid black;
+        }
+
+    </style>
+{% endblock %}
+
+
+
+{% block 'content' %}
+    <h1> customers </h1>
+    <a href=" {% url 'signup_customer' %} "> Register New customer</a>
+    <table>
+        <tr>
+            <th> ID </th>
+            <th> First Name </th>
+            <th> last Name </th>
+            <th> Phone </th>
+            <th> Email </th>
+            <th> Actions </th>
+        </tr>
+
+        {% for customer in customers %}
+            <tr>
+                <td> 
+                    <a href=" {% url 'update_customer' customer.id  %} "> {{ customer.id }} </a>
+                </td>
+
+                <td> {{ customer.first_name }} </td>
+                <td> {{ customer.last_name }} </td>
+                <td> {{ customer.phone }} </td>
+                <td> {{ customer.email }} </td>
+                <td> <a href=" {% url 'delete_customer' customer.id %} ">Delete </a>  </td>
+               
+            </tr>
+        {% endfor %}
+       
+
+    </table>
+
+
+
+
+{% endblock %}

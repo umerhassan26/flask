@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
 
 
-class Brand(models.Model):
+class Brand(models.Model):  
     name = models.CharField(max_length=50)
 
     def __str__(self):
