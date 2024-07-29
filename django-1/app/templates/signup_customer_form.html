@@ -8,32 +8,38 @@
     <h1>Register New Customer.</h1>
     <a href=" {% url 'customers' %} ">Customers</a>
 
-    <form method="POST" action=" {% url 'signup_customer' %} ">
+    <form method="POST" action=" {% url 'signup_customer_form' %} ">
 
         {% csrf_token %}
+        
+        <!-- {{ form.as_p }} -->
+
+
+
 
         <label for="first_name"> First Name </label>
-        <input type="text" name="first_name" >
+        {{ form.first_name }}
 
         <br>
         <label for="last_name"> Last Name </label>
-        <input type="text" name="last_name">
+        {{ form.last_name }}
 
         <br>
         <label for="email"> Email </label>
-        <input type="text" name="email">
+        {{ form.email }}
 
         <br>
         <label for="phone"> Phone </label>
-        <input type="text" name="phone">
+        {{ form.phone }}
 
         <br>
         <label for="password"> Password </label>
-        <input type="text" name="password">
+        {{ form.password }}
 
         <br>
         <label for="confirm_password"> Password (again) </label>
-        <input type="text" name="confirm_password">
+        {{ form.confirm_password }}
+
         <br>
 
         <button type="submit"> signup </button>

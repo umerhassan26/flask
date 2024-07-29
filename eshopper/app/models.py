@@ -14,7 +14,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.nameCl
+        return self.name
 
 
 class Product(models.Model):
@@ -40,3 +40,22 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.qty} - {self.sub_total}"
+
+
+class Order(models.Model):
+    title = models.CharField(max_length=15)
+    first_name = models.CharField(max_length=150)
+    middle_name = models.CharField(max_length=150, null=True)
+    last_name = models.CharField(max_length=150)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    address1 = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=255, null=True)
+    zip_code = models.CharField(max_length=10)
+    country = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    note = models.TextField( )
+    user = models.ManyToManyField(User, null=True, blank=True)
+    order_price = models.DecimalField( max_digits=8,decimal_places=2, null=True, blank=True)
+

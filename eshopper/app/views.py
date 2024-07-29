@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from .forms.user_create_form import UserCreateForm
+from .forms.checkout_form import CheckoutForm
+
 
 from .models import Category, Brand, Product, Cart
 
@@ -77,14 +79,68 @@ def product_details(request,id):
     return render(request,'product_details.html' , {'product':product})
 
 def checkout(request):
-    return render(request,'checkout.html')
+
+    total = 0
+    user_id = request.user.id
+    shipping_charges = 20.00
+    cart_items = Cart.objects.filter(user = user_id)
+    for item in cart_items:
+        total = total + item.sub_total
+    
+    tax = float(total) * 0.17
+    # return HttpResponse( tax )
+    
+    grand_total = float(total) + tax + shipping_charges
+    # return HttpResponse(user_id)
+
+
+    if request.method == 'GET':
+        checkout_form = CheckoutForm()
+        # return HttpResponse(checkout_form)
+
+        return render(request,'checkout.html',{ 
+        'cart_items': cart_items, 
+        'total' :total, 
+        'shipping_charges' : shipping_charges,
+        'tax' : tax,
+        'grand_total' :grand_total,
+        'form' : checkout_form  })
+    else:
+        # return HttpResponse( request.user.email )
+        form = CheckoutForm( request.POST )
+        if form.is_valid():
+            form.user = request.user
+            form.order_price = grand_total
+            form.save()
+            # return HttpResponse(form.user)
+        else:   
+            return HttpResponse('invalid data.')
+        return HttpResponse(request.POST)
+
+
+
+
 
 def cart(request):
+    total = 0
     user_id = request.user.id
-
+    shipping_charges = 20.00
     cart_items = Cart.objects.filter(user = user_id)
-    # return HttpResponse(cart)
-    return render(request,'cart.html', { 'cart_items': cart_items } )
+    for item in cart_items:
+        total = total + item.sub_total
+    
+    tax = float(total) * 0.17
+    # return HttpResponse( tax )
+    
+    grand_total = float(total) + tax + shipping_charges
+    # return HttpResponse(user_id)
+
+    return render(request,'cart.html', { 
+        'cart_items': cart_items, 
+        'total' :total, 
+        'shipping_charges' : shipping_charges,
+        'tax' : tax,
+        'grand_total' :grand_total } )
 
 def add_to_cart(request):
     product_id = request.POST['product_id']
@@ -96,20 +152,25 @@ def add_to_cart(request):
             # return HttpResponse(sub_total)
 
     try:
+        # return HttpResponse(user_id)
         cart_item = Cart.objects.get(product = product, user = user_id)
         
-        if cart_item is None:
-            sub_total = product.price * int(qty)
-            cart = Cart(product=product, qty=qty, sub_total = sub_total, user = user_id)
-            cart.save()
-        else:
-            cart_item.qty = cart_item.qty + int(qty)
-            cart_item.sub_total =  cart_item.qty * product.price
-            cart_item.save()
-
-
     except:
-        return redirect('shop')
+        cart_item = None
+
+
+
+    if cart_item is None:
+        
+        # create new entry in cart  
+        sub_total = product.price * int(qty)
+        cart = Cart(product=product, qty=qty, sub_total = sub_total, user = user_id)
+        cart.save()
+    else:
+        # update the existing item qty
+        cart_item.qty = cart_item.qty + int(qty)
+        cart_item.sub_total =  cart_item.qty * product.price
+        cart_item.save()
 
 
     # return HttpResponse(check_cart)
